@@ -1,0 +1,82 @@
+<mat-toolbar color="primary">
+    <span *ngIf="loggedUser">{{ loggedUser.email }}</span>
+    <span class="fill-remaining-space"></span>
+    <mat-icon class="default-cursor">{{ cloudStatus }}</mat-icon>
+    <mat-icon class="pointer-cursor" *ngIf="loggedIn" (click)="logOut()">exit_to_app</mat-icon>
+</mat-toolbar>
+
+
+<mat-card class="push-notification" *ngIf="cloudMsg">
+    <p>🔔 ngNotes</p>
+    <mat-card-header>
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title>
+            <strong>{{ cloudMsg.notification.title }}</strong>
+        </mat-card-title>
+        <mat-card-subtitle>{{ cloudMsg.notification.body }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+        <button mat-button (click)="cloudMsg=null">CLOSE</button>
+        <a href="https://oitsys.com" target="_blank">
+            <button mat-button (click)="cloudMsg=null">SEE MORE</button>
+        </a>
+    </mat-card-actions>
+</mat-card>
+
+
+<ng-container *ngIf="!loggedIn">
+
+    <div>
+        <h1>ngNotes</h1>
+        <p>NgNotes is an Angular-PWA developed by @feviarc for demo purposes.</p>
+    </div>
+
+    <mat-card class="login">
+        <mat-card-content>
+            <button mat-raised-button class="facebook-button" (click)="loginWithFacebook()">Login with Facebook</button>
+            <p>or use a registered account</p>
+            <div class="email-container">
+                <mat-form-field  appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput [(ngModel)]="loginParams.email" required email>
+                    <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="password-container">
+                <mat-form-field  appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hiddenPassword ? 'password' : 'text'" [(ngModel)]="loginParams.password">
+                    <mat-icon class="pointer-cursor" matSuffix (click)="hiddenPassword = !hiddenPassword">{{hiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="logIn()" [disabled]="loginParams.email && loginParams.password ? false : true">Login</button>
+        </mat-card-content>
+    </mat-card>
+
+</ng-container>
+
+<ng-container *ngIf="loggedUser">
+
+    <mat-card class="note" *ngFor="let note of notes">
+        <mat-card-header>
+            <mat-card-title>{{ note.title }}</mat-card-title>
+            <span class="fill-remaining-space"></span>
+            <ng-container *ngIf="loggedIn">
+                <mat-icon class="pointer-cursor" (click)="writeANote(note)">edit</mat-icon>
+                <mat-icon class="pointer-cursor" (click)="deleteNote(note)">delete</mat-icon>
+            </ng-container>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ note.msgBody }}</p>
+            <mat-chip-list>
+                <mat-chip color="warn">{{ note.category }}</mat-chip>
+            </mat-chip-list>
+            <small>{{ note.created | date:'short' }}</small>
+        </mat-card-content>
+    </mat-card>
+ 
+    <button mat-fab color="primary" (click)="writeANote(null)">
+        <mat-icon class="pointer-cursor" style="margin:0">note_add</mat-icon>
+    </button>
+
+</ng-container>

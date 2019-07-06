@@ -1,0 +1,27 @@
+
+<h3>{{actionTitle}}</h3>
+<button mat-raised-button [disabled]="(note.title || note.msgBody) ? false : true" color="primary" (click)="saveNote()">Save</button>
+
+<div class="title-bottom-sheet">
+  <mat-form-field  appearance="standard">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="note.title">
+  </mat-form-field>
+</div>
+
+<div class="msg-bottom-sheet">
+  <mat-form-field>
+    <textarea matInput [(ngModel)]="note.msgBody"></textarea>
+  </mat-form-field>
+</div>
+
+<div class="cats-bottom-sheet">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ note.category ? note.category : categories[0] }}</mat-label>
+    <mat-select [(ngModel)]="note.category">
+      <mat-option *ngFor="let cat of categories" [value]="cat">
+        {{cat}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
