@@ -27,13 +27,11 @@ export class MessagingService {
     this.messaging.requestPermission()
     .then(
       () => {
-        console.log('Notification permission granted.');
         return this.messaging.getToken();
       }
     )
     .then(
       (token) => {
-        console.log(token);
         this.updateToken(token);
       }
     )

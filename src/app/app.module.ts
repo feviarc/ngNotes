@@ -40,7 +40,6 @@ import { DialogComponent } from './components/dialog/dialog.component';
 
 
 
-
 // Put here your own firebase Database Connection Settings
 const firebaseConfig = {
     apiKey: '***************************************',

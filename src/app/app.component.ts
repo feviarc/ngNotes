@@ -44,7 +44,6 @@ export class AppComponent implements OnInit {
   snackBarRef: MatSnackBarRef<SimpleSnackBar>;
 
 
-
   constructor(
     private authService: AuthService,
     private bottomSheet: MatBottomSheet,
@@ -107,7 +106,6 @@ export class AppComponent implements OnInit {
       this.messagingService.receiveMessage().onMessage(
         (payload) => {
           this.cloudMsg = payload;
-          console.log('cloudMsg', this.cloudMsg);
         }
       );
     }

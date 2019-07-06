@@ -64,8 +64,7 @@ export class AuthService {
   setLoggedUser(loggedUser: any) {
 
     this.loggedUser = loggedUser;
-    console.log('setLoggedUser()', this.loggedUser);
-
+   
   }
 
 }
